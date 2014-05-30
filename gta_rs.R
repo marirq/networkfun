@@ -47,7 +47,7 @@ View(gta2012.coord)
 write.csv2(gta2012.coord,'gta2012_coord.csv',row.names=F)
 View(gta.limp2012)
 # juntando GTAs de 2012 e 2013
-gtas <- 
+# no arquivo joinDf.R
 
 
 ###### transformando de comma p/dot ######
