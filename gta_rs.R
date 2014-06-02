@@ -5,7 +5,7 @@ names(gta2013)
 # ver os nomes q estao nessa coluna
 levels(gta2013[,'ESPECIE_ANIMAL'])
 # para limpar o banco, deixando so as movimentacoes de suinos - eliminando as outras linhas
-gta2013a <- gta2013[which(gta2013$ESPECIE_ANIMAL == 'SuÃ­no'),]
+gta2013a <- gta2013[which(gta2013$ESPECIE_ANIMAL == 'Suíno'),]
 names(gta2013a)
 View(gta2013a)
 # tirando as colunas extras
@@ -22,7 +22,7 @@ names(gta2012)
 # ver os nomes q estao nessa coluna
 levels(gta2012[,'ESPECIE_ANIMAL'])
 # para limpar o banco, deixando so as movimentacoes de suinos - eliminando as outras linhas
-gta2012a <- gta2012[which(gta2012$ESPECIE_ANIMAL == 'SuÃ­no'),]
+gta2012a <- gta2012[which(gta2012$ESPECIE_ANIMAL == 'Suíno'),]
 names(gta2012)
 # tirando as colunas extras
 gta.limp2012 <- subset(gta2012a, select=c(ANO,GTA, SERIE,FINALIDADE,TOTAL,COD_MUN_IBGE_ORI,MUNICIPIO_ORI,PRODUTOR_ORI,

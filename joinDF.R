@@ -1,9 +1,13 @@
 # juntando GTAs 2012 e 2013
 gtas <- rbind(gta.limp2012,gta.limp2013)
+
+gtas1 <- gtas[which(gtas$COD_PROP_ORI != ''),]
+gtas2 <- gtas[which(gtas$COD_PROP_DEST != ''),]
 head(gtas)
 tail(gtas)
 names(gtas)
 
+write.csv2(gtas,'gtas.csv',row.names=F,col.names=T)# pra ver o banco
 setwd('C:/Users/Mariana/Desktop')
 
 # juntando gtas com coordenadas
@@ -14,7 +18,7 @@ names(plimp)
 gtas.coord <- merge(a1,plimp,by.x='COD_PROP_DEST',by.y='CODIGO_PROPRIEDADE')
 names(a1)
 names(gtas.coord)
-
+write.csv2(a1,'gtas.coord.ori.csv',col.names=T,row.names=F)
 write.csv2(gtas.coord,'gtas.coord.csv',col.names=T,row.names=F)
 View(gtas.coord)
 setwd('C:/Users/Mariana/Desktop')
