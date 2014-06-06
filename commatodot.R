@@ -1,15 +1,16 @@
 # gta2012.coord col 15 e 16 'factor'
-class(gta2012.coord[,15]);class(gta2012.coord[,16])
+length(coord.limp)
+class(coord.limp[,2]);class(coord.limp[,3])
 
 # transformar para character
-gta2012.coord[,15] <- as.character(gta2012.coord[,15]);gta2012.coord[,16] <- as.character(gta2012.coord[,16])
-class(gta2012.coord[,15]);class(gta2012.coord[,16])
+coord.limp[,2] <- as.character(coord.limp[,2]);coord.limp[,3] <- as.character(coord.limp[,3])
+class(coord.limp[,2]);class(coord.limp[,3])
 
 # trocarvirgula por ponto
-gta2012.coord[,15] <- sub(',','.',gta2012.coord[,15]);gta2012.coord[,16] <- sub(',','.',gta2012.coord[,16])
-View(gta2012.coord)
+coord.limp[,2] <- sub(',','.',coord.limp[,2]);coord.limp[,3] <- sub(',','.',coord.limp[,3])
+View(coord.limp)
 
 # tranformar para numero
-gta2012.coord[,15] <- as.numeric(gta2012.coord[,15]);gta2012.coord[,16] <- as.numeric(gta2012.coord[,16])
-class(gta2012.coord[,15]);class(gta2012.coord[,16])
-gta2012.coord[1,15]
+coord.limp[,2] <- as.numeric(coord.limp[,2]);coord.limp[,3] <- as.numeric(coord.limp[,3])
+class(coord.limp[,2]);class(coord.limp[,3])
+coord.limp[1,2]

@@ -9,12 +9,16 @@ ncol(coord)
 points(coord[1:500 , 15:16])
 
 View(coord)
+library(igraph)
+plot.igraph(rede_circuitos)
 
-# Ze me passou pra fazer o grafo
+# Ze me passou para fazer o grafo
+rede_circuitos <- graph.data.frame(gtas)
 rede_circuitos <- graph.adjacency(adjmatrix=rede, diag=F, weighted=T)
-
-rede_circuitos <- set.vertex.attribute(graph=rede_circuitos, name='latitude', value=coordenada$latitude)
-rede_circuitos <- set.vertex.attribute(graph=rede_circuitos, name='longitude', value=coordenada$longitude)
+head(rede_circuitos)
+# graph.adjlist
+rede_circuitos <- set.vertex.attribute(graph=rede_circuitos, name='latitude', value=prod.limp$LATITUDE_DECIMAL)
+rede_circuitos <- set.vertex.attribute(graph=rede_circuitos, name='longitude', value=prod.limp$LONGITUDE_DECIMAL)
 summary(rede_circuitos)
 write.graph(graph=rede_circuitos,file='circuitos.graphml', format= 'graphml')
 

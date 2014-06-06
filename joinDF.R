@@ -1,6 +1,6 @@
 # juntando GTAs 2012 e 2013
 gtas <- rbind(gta.limp2012,gta.limp2013)
-
+View(gtas)
 gtas1 <- gtas[which(gtas$COD_PROP_ORI != ''),]
 gtas2 <- gtas[which(gtas$COD_PROP_DEST != ''),]
 head(gtas)
