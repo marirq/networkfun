@@ -1,4 +1,4 @@
-# gta2012.coord col 15 e 16 'factor'
+# coord col 2 e 3 'factor'
 length(coord.limp)
 class(coord.limp[,2]);class(coord.limp[,3])
 

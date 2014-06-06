@@ -26,7 +26,7 @@ prod <- read.csv('produtores_07fev2014.csv',header=T,sep=';')
 # limpando banco de coordenadas 
 coord.limp <- subset(prod, select=c(CODIGO_PROPRIEDADE,LONGITUDE_DECIMAL,LATITUDE_DECIMAL))
 View(coord.limp)
-
+rede_circuitos[1:5,1:5]
 
 ##### transformando de virgula p/ponto #####
 # gta2012.coord col 15 e 16 'factor'
@@ -64,20 +64,18 @@ names(gtas.coords)
 gtas.coords <- gtas.coords[which(gtas.coords$lat_out != ''),]
 gtas.coords <- gtas.coords[which(gtas.coords$lat_in != ''),]
 write.csv2(gtas.coords,'gtas.coords.csv',row.names=F)
-
-
+View(gtas.coords)
+length(gtas.coords)
 # library("igraph", lib.loc="C:/Users/Mariana/Documents/R/win-library/3.0")
 ##### montar rede ##### 
 rede_circuitos <- graph.data.frame(gtas.coords,directed=T)
 # colocando coordenadas como atributos dos vertices
-rede_circuitos <- set.vertex.attribute(graph=rede_circuitos, name='lat.out', value=gtas.coords$lat_out)
-rede_circuitos <- set.vertex.attribute(graph=rede_circuitos, name='long.out', value=gtas.coords$long_out)
-rede_circuitos <- set.vertex.attribute(graph=rede_circuitos, name='lat.in', value=gtas.coords$lat_in)
-rede_circuitos <- set.vertex.attribute(graph=rede_circuitos, name='long.in', value=gtas.coords$long_in)
+rede_circuitos <- set.vertex.attribute(graph=rede_circuitos, name='latitude', value=gtas.coords$lat_out)
+rede_circuitos <- set.vertex.attribute(graph=rede_circuitos, name='longitude', value=gtas.coords$long_out)
 summary(rede_circuitos)
 write.graph(graph=rede_circuitos,file='circuitos.graphml', format= 'graphml')
 
-plot(rede_circuitos,as.list(E(rede_circuitos)$weight))
+
 class(E(rede_circuitos)$weight)
 warnings()
-plot(rede_circuitos)
+plot(rede_circuitos,edge.width=E(rede_circuitos)$weight)

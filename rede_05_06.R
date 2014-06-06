@@ -45,28 +45,60 @@ View(redes1)
 redes2 <- redes1[which(redes1$In != ''),] # tirando as linhas com NAs na coluna In
 write.csv2(redes2,'redes2.csv',row.names=F)
 View(redes2)
-class(redes2[,1]);class(redes2[,2])
-redes2[,1] <- as.numeric(redes2[,1]);redes2[,2] <- as.numeric(redes2[,2])
-class(redes2[,1]);class(redes2[,2])
+# tirando linhas inuteis pois nao estao com codigo
+redes3 <- redes2[which(redes2$Out != 'L SÃO PAULO'),]
+redes4 <- redes3[which(redes3$Out != 'GRANJA GRSC'),]
+redes5 <- redes4[which(redes4$Out != 'CISPOA 432'),]
+redes6 <- redes5[which(redes5$Out != 'CISPOA 861'),]
+redes7 <- redes6[which(redes6$Out != 'CISPOA 821'),]
+redes8 <- redes7[which(redes7$Out != 'GJ SCHOELER'),]
+redes9 <- redes8[which(redes8$Out != 'SIM 003'),]
+redes <- redes9[which(redes9$Out != 'WARMELING'),] # esse eh o banco das redes
+# deixando as colunas Out e In como numeric
+class(redes[,1]);class(redes[,2])
+redes[,1] <- as.numeric(redes[,1]);redes[,2] <- as.numeric(redes[,2])
+class(redes[,1]);class(redes[,2])
 
 ###### importando coordenadas ######
 prod <- read.csv('produtores_07fev2014.csv',header=T,sep=';')
 # limpando banco de coordenadas 
 coord.limp <- subset(prod, select=c(CODIGO_PROPRIEDADE,LONGITUDE_DECIMAL,LATITUDE_DECIMAL))
 View(coord.limp)
+str(coord.limp)
+
+###### transformando trocar virgula por ponto e lat e long em 'numeric' ######
+# coord.limp col 2 e 3 'factor'
+length(coord.limp)
+class(coord.limp[,2]);class(coord.limp[,3])
+# transformar para character
+coord.limp[,2] <- as.character(coord.limp[,2]);coord.limp[,3] <- as.character(coord.limp[,3])
+class(coord.limp[,2]);class(coord.limp[,3])
+# trocar virgula por ponto
+coord.limp[,2] <- sub(',','.',coord.limp[,2]);coord.limp[,3] <- sub(',','.',coord.limp[,3])
+View(coord.limp)
+# tranformar para numero
+coord.limp[,2] <- as.numeric(coord.limp[,2]);coord.limp[,3] <- as.numeric(coord.limp[,3])
+class(coord.limp[,2]);class(coord.limp[,3])
+coord.limp[1,2] # confirmando
 
 ###### Montar grafo ######
-rede_circuitos <- graph.data.frame(redes2,directed=T)
+library(igraph)
+rede_circuitos <- graph.data.frame(redes,directed=T)
 summary(rede_circuitos)
 # verificando a ordem dos codigos no grafo 
 ordem_codigos_no_grafo <- get.vertex.attribute(graph=rede_circuitos,name='name')
-ordem_codigos_no_grafo <- as.numeric(ordem_codigos_no_grafo)
 summary(ordem_codigos_no_grafo)
-class(ordem_codigos_no_grafo)
+#class(ordem_codigos_no_grafo) 
+# transformar para numeric
+#ordem_codigos_no_grafo <- as.numeric(ordem_codigos_no_grafo)
+#summary(ordem_codigos_no_grafo)
+#class(ordem_codigos_no_grafo)
 # fazendo banco das coordenadas pela ordem que ta no grafo
-nova_lat <- rep(0.1,length(ordem_codigos_no_grafo))
+nova_lat <- length(ordem_codigos_no_grafo)
 str(nova_lat)
 str(ordem_codigos_no_grafo)
+length(nova_lat)
+length(ordem_codigos_no_grafo)
 head(nova_lat)
 tail(nova_lat)
 for (i in 1:length(ordem_codigos_no_grafo) )
