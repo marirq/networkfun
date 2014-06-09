@@ -1,6 +1,12 @@
 ###### iniciando novamente - 05.06.2014 ######
 ###### importando GTAs 2013 ######
-gta2013 <- read.csv2('baseGTAsuscetiveis2013.csv',header=T,sep=';')
+gta2013 <- read.csv('baseGTAsuscetiveis2013.csv',header=T,sep=';')
+str(gta2013)
+gta2013$COD_PROP_ORI <- as.character(gta2013$COD_PROP_ORI)
+class(gta2013$COD_PROP_ORI)
+gta2013$COD_PROP_ORI[which(gta2013!=grep('^43',gta2013$COD_PROP_ORI))]# deu certo!
+
+
 #head(gta2013)
 #str(gta2013a$COD_PROP_ORI)
 #gta2013a$COD_PROP_ORI <- as.character(gta2013a$COD_PROP_ORI)
@@ -17,11 +23,28 @@ gta.limp2013 <- subset(gta2013a, select=c(GTA, SERIE, ANO, FINALIDADE, TOT_OUTRO
                                           PRODUTOR_ORI, COD_PROP_ORI, COD_MUN_IBGE_DEST, MUNICIPIO_DEST, 
                                           PRODUTOR_DEST, COD_PROP_DEST)) 
 View(gta.limp2013)
-write.csv2(gta.limp2013,'gta_limp2013.csv',row.names=F)
+
 head(gta.limp2013)
 # deixar 3 colunas (out, in, weight) para fazer a rede
 rede2013 <- data.frame(gta.limp2013$COD_PROP_ORI ,gta.limp2013$COD_PROP_DEST, gta.limp2013$TOT_OUTROS)
 names(rede2013)
+str(rede2013)
+rede2013$Out <- as.character(rede2013$Out)
+rede2013$Out[which(rede2013!=grep('^43',rede2013$Out))]
+
+
+
+
+
+
+
+
+str(rede2012)
+
+
+
+
+
 # trocando nomes das colunas pra facilitar
 library(plyr)
 rede2013 <- rename(rede2013,c('gta.limp2013.COD_PROP_ORI'='Out','gta.limp2013.COD_PROP_DEST'='In','gta.limp2013.TOT_OUTROS'='Weight'))
@@ -117,15 +140,28 @@ View(nova_lat)
 str(redes)
 str(nova_lat)
 str(ordem_cod_grafo)
+str(rede_circuitos)
 length(nova_lat)
 nova_lat
 length(ordem_cod_grafo)
 View(ordem_cod_grafo)
-
-for (i in 1:14969 )
+View(nova_lat)
+nova_lat <- NULL
+for (i in 5555:5565)#1:14969 )
+  if(ordem_cod_grafo[i] == nchar(43000340001))
   nova_lat[i] <- coord.limp$LATITUDE_DECIMAL[ which(coord.limp$CODIGO_PROPRIEDADE == ordem_cod_grafo[i] ) ]
-# ver o q ta de problema dentro do for
 
+nova_lat
+
+# ver o q ta de problema dentro do for
+mari <- NULL
+for (w in 5555:5560)
+  mari[w] <- coord.limp$LATITUDE_DECIMAL[which(coord.limp$CODIGO_PROPRIEDADE == ordem_cod_grafo[555])]
+mari
+w <- 5555
+ordem_cod_grafo <- as.numeric(ordem_cod_grafo)
+
+class(ordem_cod_grafo)
 View(coord.limp)
 View(nova_lat)
 warnings()

@@ -1,6 +1,18 @@
 ###### iniciando novamente - 05.06.2014 ######
 ###### importando GTAs 2013 ######
-gta2013 <- read.csv2('baseGTAsuscetiveis2013.csv',header=T,sep=';')
+gta2013 <- read.csv('baseGTAsuscetiveis2013.csv',header=T,sep=';')
+str(gta2013)
+names(gta2013) # para saber quais colunas quero ver qdo usar o grep() - especie e cod produtor ori
+# transformar para character para usar grep()
+gta2013$COD_PROP_ORI <- as.character(gta2013$COD_PROP_ORI)
+gta2013[which(gta2013 != grep('^4',gta2013$COD_PROP_ORI)),c(8,27)]
+gta2013[which(gta2013$COD_PROP_ORI == ''),]
+gta2013$COD_PROP_ORI <- as.character(gta2013$COD_PROP_ORI)
+#class(gta2013$COD_PROP_ORI)
+#gta2013$COD_PROP_ORI[which(gta2013!=grep('^43',gta2013$COD_PROP_ORI))]# deu certo?
+
+# na coluna COD_PROP_ORI quais as linhas em que no 'gta2013' a coluna COD_PRO_ORI comecam com 43
+?subset
 #head(gta2013)
 #str(gta2013a$COD_PROP_ORI)
 #gta2013a$COD_PROP_ORI <- as.character(gta2013a$COD_PROP_ORI)
@@ -12,20 +24,36 @@ levels(gta2013[,'ESPECIE_ANIMAL'])
 # para limpar o banco, deixando so as movimentacoes de suinos - eliminando as outras linhas
 gta2013a <- gta2013[which(gta2013$ESPECIE_ANIMAL == 'Suíno'),]
 names(gta2013a)
+str(gta2013a)
 # eliminar colunas excessivas
 gta.limp2013 <- subset(gta2013a, select=c(GTA, SERIE, ANO, FINALIDADE, TOT_OUTROS, COD_MUN_IBGE_ORI, MUNICIPIO_ORI,
                                           PRODUTOR_ORI, COD_PROP_ORI, COD_MUN_IBGE_DEST, MUNICIPIO_DEST, 
                                           PRODUTOR_DEST, COD_PROP_DEST)) 
 View(gta.limp2013)
-write.csv2(gta.limp2013,'gta_limp2013.csv',row.names=F)
+str(gta.limp2013)
 head(gta.limp2013)
+
 # deixar 3 colunas (out, in, weight) para fazer a rede
 rede2013 <- data.frame(gta.limp2013$COD_PROP_ORI ,gta.limp2013$COD_PROP_DEST, gta.limp2013$TOT_OUTROS)
 names(rede2013)
+str(rede2013)
 # trocando nomes das colunas pra facilitar
 library(plyr)
 rede2013 <- rename(rede2013,c('gta.limp2013.COD_PROP_ORI'='Out','gta.limp2013.COD_PROP_DEST'='In','gta.limp2013.TOT_OUTROS'='Weight'))
 View(rede2013)
+str(rede2013)
+# mudar para character para selecionar as linhas que me interessam
+rede2013$Out <- as.character(rede2013$Out); rede2013$In <- as.character(rede2013$In)
+str(rede2013)
+rede2013A <- rede2013[which(rede2013$Out!=''),]
+View(rede2013A)
+rede2013B <- rede2013A[which(rede2013A$In!=''),]
+View(rede2013B)
+#rede2013A <- rede2013[which(rede2013$Out==grep('^4',rede2013$Out,value=T)),]
+#rede2013B <- rede2013A[which(rede2013A$In==grep('^4',rede2013A$In,value=T)),]
+View(rede2013A)
+str(rede2013)
+ma1 <- ma[which(ma$Out==grep('^4',ma$Out,value=T)),]
 
 ###### importando GTAs 2012 ######
 gta2012 <- read.csv('baseGTAsuscetiveis2012.csv',header=T,sep=';')
@@ -45,6 +73,13 @@ names(rede2012)
 # trocando nomes das colunas pra facilitar
 rede2012 <- rename(rede2012,c('gta.limp2012.COD_PROP_ORI'='Out','gta.limp2012.COD_PROP_DEST'='In','gta.limp2012.TOT_OUTROS'='Weight'))
 View(rede2012)
+names(rede2012)
+str(rede2012)
+# mudar para character para selecionar as linhas que me interessam
+rede2012$Out <- as.character(rede2012$Out); rede2012$In <- as.character(rede2012$In)
+str(rede2012)
+rede2012A <- rede2012[which(rede2012$Out!=''),]
+rede2012B <- rede2012A[which(rede2012A$In!=''),]
 
 ###### Fazendo o banco das redes ######
 # juntar redes de 2012 e 2013
@@ -117,15 +152,28 @@ View(nova_lat)
 str(redes)
 str(nova_lat)
 str(ordem_cod_grafo)
+str(rede_circuitos)
 length(nova_lat)
 nova_lat
 length(ordem_cod_grafo)
 View(ordem_cod_grafo)
-
-for (i in 1:14969 )
+View(nova_lat)
+nova_lat <- NULL
+for (i in 5555:5565)#1:14969 )
+  if(ordem_cod_grafo[i] == nchar(43000340001))
   nova_lat[i] <- coord.limp$LATITUDE_DECIMAL[ which(coord.limp$CODIGO_PROPRIEDADE == ordem_cod_grafo[i] ) ]
-# ver o q ta de problema dentro do for
 
+nova_lat
+
+# ver o q ta de problema dentro do for
+mari <- NULL
+for (w in 5555:5560)
+  mari[w] <- coord.limp$LATITUDE_DECIMAL[which(coord.limp$CODIGO_PROPRIEDADE == ordem_cod_grafo[555])]
+mari
+w <- 5555
+ordem_cod_grafo <- as.numeric(ordem_cod_grafo)
+
+class(ordem_cod_grafo)
 View(coord.limp)
 View(nova_lat)
 warnings()
