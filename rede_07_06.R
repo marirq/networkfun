@@ -68,6 +68,10 @@ names(rede2012)
 # trocando nomes das colunas pra facilitar
 rede2012 <- rename(rede2012,c('gta.limp2012.COD_PROP_ORI'='Out','gta.limp2012.COD_PROP_DEST'='In','gta.limp2012.TOT_OUTROS'='Weight'))
 View(rede2012)
+names(rede2012)
+rede_2012 <- rede2012[which(rede2012!=grep('^4',rede2012$Out,value=T)),]
+head(rede_2012)
+grep
 
 ###### Fazendo o banco das redes ######
 # juntar redes de 2012 e 2013

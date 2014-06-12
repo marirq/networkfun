@@ -3,9 +3,9 @@
 gta2013 <- read.csv('baseGTAsuscetiveis2013.csv',header=T,sep=';')
 str(gta2013)
 names(gta2013) # para saber quais colunas quero ver qdo usar o grep() - especie e cod produtor ori
-# transformar para character para usar grep()
 gta2013$COD_PROP_ORI <- as.character(gta2013$COD_PROP_ORI)
-gta2013[which(gta2013 != grep('^4',gta2013$COD_PROP_ORI)),c(8,27)]
+a <- gta2013[which(gta2013 != grep('^4',gta2013$COD_PROP_ORI,value=TRUE)),c(8,27)]
+
 gta2013[which(gta2013$COD_PROP_ORI == ''),]
 gta2013$COD_PROP_ORI <- as.character(gta2013$COD_PROP_ORI)
 #class(gta2013$COD_PROP_ORI)

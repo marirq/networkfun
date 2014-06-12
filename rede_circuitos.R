@@ -9,6 +9,7 @@ gta.limp2013 <- subset(gta2013a, select=c(COD_PROP_ORI,COD_PROP_DEST,TOTAL,ANO,G
                                           COD_MUN_IBGE_ORI,MUNICIPIO_ORI,PRODUTOR_DEST,COD_MUN_IBGE_DEST,
                                           MUNICIPIO_DEST)) 
 
+
 ###### importando GTAs 2012 ######
 gta2012 <- read.csv('baseGTAsuscetiveis2012.csv',header=T,sep=';')
 # ver os nomes q estao nessa coluna
